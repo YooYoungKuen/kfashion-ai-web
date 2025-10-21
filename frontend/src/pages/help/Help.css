@@ -1,0 +1,134 @@
+/* ======================================
+   REVIA 고객센터 스타일
+   ====================================== */
+
+.help {
+  min-height: 100vh;
+  background: transparent;
+  color: var(--text-main);
+  padding: 100px 20px;
+  text-align: center;
+  transition: color 0.4s ease;
+}
+
+.help-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* 타이틀 */
+.help h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+.help h1 span {
+  color: var(--accent);
+}
+.help .desc {
+  color: var(--text-sub);
+  line-height: 1.7;
+  margin-bottom: 60px;
+}
+
+/* FAQ */
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-bottom: 80px;
+}
+.faq-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: 20px;
+  padding: 30px 25px;
+  text-align: left;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+.faq-card:hover {
+  transform: translateY(-5px);
+  background: var(--card-hover);
+}
+.faq-card h3 {
+  font-size: 1.1rem;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.faq-card p {
+  color: var(--text-sub);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* 문의 섹션 */
+.contact-box {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: 20px;
+  padding: 50px 30px;
+  text-align: center;
+  transition: background 0.4s ease;
+}
+.contact-box h2 {
+  color: var(--accent);
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+.contact-box p {
+  color: var(--text-sub);
+  margin-bottom: 30px;
+}
+
+/* 문의 폼 */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.contact-form input,
+.contact-form textarea {
+  background: var(--card-hover);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 1rem;
+  color: var(--text-main);
+  outline: none;
+  transition: all 0.3s ease;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--accent-light);
+  box-shadow: 0 0 8px rgba(138, 102, 255, 0.3);
+}
+.contact-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.contact-form .btn {
+  margin-top: 10px;
+  font-size: 1rem;
+  padding: 14px 32px;
+  align-self: center;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .help {
+    padding: 70px 16px;
+  }
+  .faq-grid {
+    gap: 20px;
+  }
+  .contact-box {
+    padding: 40px 20px;
+  }
+}

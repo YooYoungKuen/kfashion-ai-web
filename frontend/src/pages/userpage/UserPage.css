@@ -1,0 +1,191 @@
+.userpage {
+  min-height: 100vh;
+  background: transparent;
+  color: var(--text-main);
+  padding: 100px 20px;
+  text-align: center;
+  transition: color 0.4s ease;
+}
+
+.userpage-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.userpage h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+.userpage h1 span {
+  color: var(--accent);
+}
+.userpage .desc {
+  color: var(--text-sub);
+  line-height: 1.7;
+  margin-bottom: 50px;
+}
+
+/* 프로필 */
+.profile-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: 20px;
+  padding: 40px 30px;
+  text-align: left;
+  margin-bottom: 60px;
+  backdrop-filter: blur(10px);
+}
+.profile-top {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+.profile-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+}
+.profile-info h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+.profile-info p {
+  color: var(--text-sub);
+  margin-bottom: 4px;
+}
+.edit-btn {
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 20px;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  transition: 0.3s ease;
+}
+.edit-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* 추천 히스토리 */
+.recommend-history {
+  margin-bottom: 80px;
+}
+.recommend-history h2 {
+  font-size: 1.5rem;
+  color: var(--accent);
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+.recommend-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
+.recommend-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: 18px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.recommend-card:hover {
+  background: var(--card-hover);
+  transform: translateY(-4px);
+}
+.recommend-card img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+.recommend-card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 14px 0;
+  color: var(--text-main);
+}
+
+/* 📊 스타일 통계 섹션 */
+.style-chart-section {
+  margin-bottom: 100px;
+}
+.style-chart-section h2 {
+  font-size: 1.5rem;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.chart-desc {
+  color: var(--text-sub);
+  font-size: 0.95rem;
+  margin-bottom: 30px;
+}
+.chart-wrapper {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+/* 활동 내역 */
+.history-section h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 25px;
+}
+.history-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+}
+.history-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--card-shadow);
+  border-radius: 18px;
+  padding: 25px 20px;
+  text-align: left;
+  transition: all 0.3s ease;
+}
+.history-card:hover {
+  background: var(--card-hover);
+  transform: translateY(-5px);
+}
+.history-card h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.history-card p {
+  color: var(--text-sub);
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+.history-card .date {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: var(--text-sub);
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .userpage {
+    padding: 70px 16px;
+  }
+  .profile-top {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
