@@ -1,5 +1,5 @@
 /* ======================================================
-   REVIA Header — Luxury Glass & Metal Tone
+   REVIA Header — Luxury Glass & Metal Edition (v2)
    ====================================================== */
 
 /* ---------------- HEADER LAYOUT ---------------- */
@@ -16,10 +16,17 @@
 
   background: var(--bg-header);
   border-bottom: 1px solid var(--header-border);
-
   backdrop-filter: blur(12px);
+
   transition: background 0.3s ease, padding 0.3s ease;
   z-index: 1000;
+}
+
+/* ---------------- LEFT SIDE ---------------- */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 
 /* ---------------- LOGO ---------------- */
@@ -29,37 +36,119 @@
   color: var(--text-main);
   text-decoration: none;
   letter-spacing: -0.5px;
+  transition: color 0.3s ease;
 }
-
-/* ---------------- RIGHT GROUP ---------------- */
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+.header-logo:hover {
+  color: var(--accent);
 }
 
 /* ======================================================
-   💎 LUXURY TOGGLE BUTTON
+   👤 LOGIN / LOGOUT BUTTONS
    ====================================================== */
+.header-login,
+.header-logout {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 34px;
+  padding: 0 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+
+  border-radius: 999px;
+  border: 1px solid rgba(180, 180, 190, 0.4);
+  background: linear-gradient(145deg, #f6f6f6, #dfe1e4);
+  color: #2b2b2b;
+
+  box-shadow:
+    inset 1px 1px 2px rgba(255, 255, 255, 0.6),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+body.dark .header-login,
+body.dark .header-logout {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: linear-gradient(145deg, #1b1b1b, #101010);
+  color: #f5f5f5;
+  box-shadow:
+    inset 1px 1px 2px rgba(255, 255, 255, 0.08),
+    0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.header-login:hover,
+.header-logout:hover {
+  transform: translateY(-2px);
+  color: var(--accent);
+  box-shadow:
+    0 0 12px rgba(130, 110, 255, 0.3),
+    0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-login::after,
+.header-logout::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  transform: skewX(-20deg);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.header-login:hover::after,
+.header-logout:hover::after {
+  opacity: 1;
+  animation: shine 1s ease;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(150%) skewX(-20deg);
+  }
+}
+
+/* ======================================================
+   💎 THEME TOGGLE + HAMBURGER GROUP
+   ====================================================== */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px; /* 🔹 햄버거와 토글 사이 여백 확보 */
+}
+
+/* LUX TOGGLE */
 .lux-toggle {
   width: 48px;
   height: 26px;
   border-radius: 999px;
-
   background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(200, 200, 200, 0.35); /* ✅ 항상 고정 테두리 */
+  border: 1px solid rgba(200, 200, 200, 0.35);
   backdrop-filter: blur(10px);
-
   display: flex;
   align-items: center;
   justify-content: flex-start;
   padding: 3px;
   cursor: pointer;
-
   transition: all 0.4s ease;
 }
 
-/* 내부 원 */
 .lux-circle {
   width: 20px;
   height: 20px;
@@ -69,41 +158,34 @@
   transition: all 0.4s ease;
 }
 
-/* 다크 모드 상태 */
 .lux-toggle.dark {
   justify-content: flex-end;
   background: rgba(20, 20, 20, 0.55);
-  border: 1px solid rgba(180, 180, 180, 0.35); /* ✅ 고정 테두리 */
+  border: 1px solid rgba(180, 180, 180, 0.35);
 }
 .lux-toggle.dark .lux-circle {
   background: linear-gradient(145deg, #2a2a2a, #000);
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.12);
 }
 
-/* Hover 효과 */
 .lux-toggle:hover {
   transform: scale(1.05);
   border-color: rgba(255, 255, 255, 0.4);
 }
 
-/* ======================================================
-   🍔 HAMBURGER MENU
-   ====================================================== */
+/* HAMBURGER MENU */
 .menu-toggle {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
   width: 26px;
   height: 20px;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
-
   z-index: 1002;
 }
-
 .menu-toggle span {
   width: 100%;
   height: 3px;
@@ -111,7 +193,6 @@
   border-radius: 3px;
   transition: all 0.25s ease;
 }
-
 .menu-toggle.active span:nth-child(1) {
   transform: translateY(8px) rotate(45deg);
 }
@@ -123,7 +204,41 @@
 }
 
 /* ======================================================
-   🩶 OVERLAY + NAVIGATION
+   📱 MOBILE RESPONSIVE FIX (Same structure as desktop)
+   ====================================================== */
+@media (max-width: 820px) {
+  .header {
+    padding: 12px 24px;
+  }
+
+  /* ✅ 순서 그대로 유지 (row-reverse 제거) */
+  .header-right {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px; /* 토글 ↔ 햄버거 여백 */
+  }
+
+  /* ✅ 크기만 살짝 축소 */
+  .lux-toggle {
+    width: 44px;
+    height: 24px;
+  }
+
+  .lux-circle {
+    width: 18px;
+    height: 18px;
+  }
+
+  .menu-toggle {
+    width: 25px;
+    height: 18px;
+  }
+}
+
+
+/* ======================================================
+   🩶 NAVIGATION & OVERLAY
    ====================================================== */
 .menu-overlay {
   position: fixed;
@@ -141,7 +256,6 @@
   width: 100%;
   background: var(--bg-header);
   border-top: 1px solid var(--header-border);
-
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.25s ease;
@@ -153,55 +267,24 @@
   padding: 8px 0;
 }
 
-.header-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.header-nav li {
-  width: 100%;
-}
-
 .header-nav a {
   display: block;
-  width: 100%;
   padding: 16px 28px;
   text-decoration: none;
-
   color: var(--text-main);
   font-size: 1rem;
   font-weight: 600;
-
   transition: background 0.25s ease, color 0.25s ease;
 }
-
 .header-nav a:hover {
   background: var(--card-hover);
   color: var(--accent);
 }
 
 /* ======================================================
-   📱 RESPONSIVE
-   ====================================================== */
-@media (max-width: 820px) {
-  .header {
-    padding: 12px 24px;
-  }
-
-  .header-right {
-    gap: 14px;
-  }
-}
-
-/* ======================================================
    ✨ ANIMATION
    ====================================================== */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

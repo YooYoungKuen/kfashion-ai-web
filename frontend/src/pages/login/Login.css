@@ -1,0 +1,217 @@
+/* ======================================================
+   REVIA Login / Signup Page — Glass & Luxury Tone (Final Edition)
+   ====================================================== */
+
+/* ---------------- BASE ---------------- */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(
+    180deg,
+    var(--bg-dark) 0%,
+    rgba(0, 0, 0, 0.95) 100%
+  );
+  color: var(--text-main);
+  transition: background 0.5s ease;
+}
+
+body.light .login-page {
+  background: linear-gradient(180deg, #f5f6f9 0%, #e4e6eb 100%);
+}
+
+/* ---------------- CARD ---------------- */
+.login-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(14px);
+  border-radius: 20px;
+  padding: 50px 60px;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s ease;
+}
+
+body.light .login-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+}
+
+.login-card:hover {
+  transform: translateY(-4px);
+}
+
+/* ---------------- TITLE ---------------- */
+.login-card h2 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: var(--accent);
+  letter-spacing: -0.3px;
+  text-shadow: 0 2px 8px rgba(138, 102, 255, 0.4);
+}
+
+/* ---------------- FORM ---------------- */
+.login-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  background: var(--card-hover);
+  color: var(--text-main);
+  font-size: 1rem;
+  transition: 0.3s ease;
+}
+
+body.light .login-card input {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #222;
+}
+
+.login-card input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(138, 102, 255, 0.4);
+}
+
+/* ---------------- EMAIL + OTP ---------------- */
+.signup-email-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+}
+
+.signup-email-row input {
+  flex: 1;
+  min-width: 0;
+  height: 46px;
+  border-radius: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--card-border);
+  background: var(--card-hover);
+  color: var(--text-main);
+  font-size: 1rem;
+  transition: 0.3s ease;
+}
+
+body.light .signup-email-row input {
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #222;
+}
+
+/* 인증번호 전송 버튼 */
+.otp-btn {
+  flex-shrink: 0;
+  height: 46px;
+  padding: 0 18px;
+  border-radius: 12px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  box-shadow: 0 4px 14px rgba(138, 102, 255, 0.35);
+  transition: all 0.25s ease;
+}
+
+.otp-btn:hover:not(:disabled) {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+.otp-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ---------------- MAIN BUTTON ---------------- */
+.login-btn {
+  margin-top: 16px;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 999px;
+  padding: 12px 18px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  box-shadow: 0 4px 14px rgba(138, 102, 255, 0.35);
+  transition: 0.3s ease;
+}
+
+.login-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+.login-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ---------------- FOOTER ---------------- */
+.login-tip {
+  margin-top: 24px;
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  opacity: 0.8;
+}
+
+.login-tip a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.login-tip a:hover {
+  color: var(--accent-light);
+}
+
+/* ---------------- ERROR ---------------- */
+.login-error {
+  margin-top: -4px;
+  color: #ff4e4e;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+@media (max-width: 480px) {
+  .login-card {
+    width: 85%;
+    padding: 40px 30px;
+  }
+
+  .login-card h2 {
+    font-size: 1.6rem;
+  }
+
+  .signup-email-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .otp-btn {
+    width: 100%;
+    height: 44px;
+  }
+}

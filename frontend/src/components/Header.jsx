@@ -1,37 +1,50 @@
 // ======================================================
-// REVIA Header
-// - 프리미엄 메탈 글라스 테마 토글
-// - Apple 감성 고정 헤더
-// - 부드러운 햄버거 모션
+// REVIA Header (Luxury Edition - Login Left Version)
+// - 로고 옆 로그인/로그아웃 버튼
+// - 고정형 글라스 헤더 + 프리미엄 토글
+// - 햄버거 네비게이션 (오른쪽)
 // ======================================================
 
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 
-export default function Header({ theme, toggleTheme }) {
+export default function Header({ theme, toggleTheme, isLoggedIn, handleLogout }) {
+  // ---------------- STATE ----------------
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // 메뉴 토글
+  // ---------------- HANDLERS ----------------
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const handleLinkClick = () => setMenuOpen(false);
 
+  // ---------------- RENDER ----------------
   return (
     <>
-      {/* ---------------- HEADER ---------------- */}
+      {/* =====================================================
+          HEADER BAR
+      ===================================================== */}
       <header className="header">
-        {/* 로고 */}
-        <Link
-          to="/"
-          className="header-logo"
-          onClick={handleLinkClick}
-        >
-          REVIA
-        </Link>
+        <div className="header-left">
+          {/* ---------- LOGO ---------- */}
+          <Link to="/" className="header-logo" onClick={handleLinkClick}>
+            REVIA
+          </Link>
 
-        {/* 우측 버튼 그룹 */}
+          {/* ---------- LOGIN / LOGOUT ---------- */}
+          {!isLoggedIn ? (
+            <Link to="/login" className="header-login" onClick={handleLinkClick}>
+              로그인
+            </Link>
+          ) : (
+            <button className="header-logout" onClick={handleLogout}>
+              로그아웃
+            </button>
+          )}
+        </div>
+
+        {/* ---------- RIGHT BUTTONS ---------- */}
         <div className="header-right">
-          {/* 💎 프리미엄 테마 토글 */}
+          {/* 💎 THEME TOGGLE */}
           <button
             className={`lux-toggle ${theme}`}
             onClick={toggleTheme}
@@ -40,7 +53,7 @@ export default function Header({ theme, toggleTheme }) {
             <div className="lux-circle" />
           </button>
 
-          {/* 🍔 햄버거 버튼 */}
+          {/* 🍔 HAMBURGER */}
           <button
             className={`menu-toggle ${menuOpen ? "active" : ""}`}
             onClick={toggleMenu}
@@ -53,15 +66,14 @@ export default function Header({ theme, toggleTheme }) {
         </div>
       </header>
 
-      {/* ---------------- OVERLAY ---------------- */}
-      {menuOpen && (
-        <div
-          className="menu-overlay"
-          onClick={toggleMenu}
-        ></div>
-      )}
+      {/* =====================================================
+          OVERLAY
+      ===================================================== */}
+      {menuOpen && <div className="menu-overlay" onClick={toggleMenu}></div>}
 
-      {/* ---------------- NAVIGATION ---------------- */}
+      {/* =====================================================
+          NAVIGATION
+      ===================================================== */}
       <nav className={`header-nav ${menuOpen ? "open" : ""}`}>
         <ul>
           <li>

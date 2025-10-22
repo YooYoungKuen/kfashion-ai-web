@@ -1,16 +1,14 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.5.6'
-    id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.springframework.boot' version '3.3.2'
+    id 'io.spring.dependency-management' version '1.1.6'
 }
 
-group = 'com.example'
+group = 'com.example.backend.revia'
 version = '0.0.1-SNAPSHOT'
-description = 'AI Image Analyzer'
+
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
+    sourceCompatibility = '17'
 }
 
 repositories {
@@ -18,17 +16,32 @@ repositories {
 }
 
 dependencies {
-    // Spring Boot Web
+    // ✅ 스프링 핵심 의존성
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 
-    // JSON 파싱용 (선택)
-    implementation 'com.google.code.gson:gson:2.10.1'
+    // ✅ 암호화 (비밀번호용 BCrypt)
+    implementation 'org.springframework.security:spring-security-crypto'
 
-    // 테스트용
+    // ✅ 데이터베이스
+    runtimeOnly 'com.h2database:h2'
+    // MySQL 사용 시 ↓
+    // runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // ✅ Lombok (빌더, 게터/세터, 생성자 등)
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // ✅ 테스트
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+springBoot {
+    mainClass = 'com.example.backend.revia.app.ReviaApplication'
 }
