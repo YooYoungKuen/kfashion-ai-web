@@ -1,20 +1,32 @@
 package com.example.backend.revia.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 /**
- * AI 이미지 분석 요청 DTO
- * - category: 분석할 이미지 카테고리 (예: 상의, 하의, 원피스 등)
- * - imageBase64: Base64 인코딩된 이미지 문자열
+ * 프론트엔드에서 이미지 분석 요청 시 사용하는 DTO
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class AiRequest {
     private String category;
     private String imageBase64;
+
+    public AiRequest() {}
+
+    public AiRequest(String category, String imageBase64) {
+        this.category = category;
+        this.imageBase64 = imageBase64;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getImageBase64() {
+        return imageBase64;
+    }
+
+    public void setImageBase64(String imageBase64) {
+        this.imageBase64 = imageBase64;
+    }
 }

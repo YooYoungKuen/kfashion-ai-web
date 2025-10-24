@@ -1,15 +1,13 @@
 // ======================================================
-// REVIA Login Page — Glass & Luxury Tone 완성본
+// REVIA Login Page — UI Only (No Login Logic)
 // ======================================================
 
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Login.css";
 
-export default function Login({ onLogin }) {
-  const navigate = useNavigate();
+export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -17,17 +15,7 @@ export default function Login({ onLogin }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // 로컬스토리지에 저장된 유저 정보 확인 (임시 로그인 로직)
-    const user = JSON.parse(localStorage.getItem("reviaUser"));
-
-    if (!user || user.email !== form.email || user.password !== form.password) {
-      setError("이메일 또는 비밀번호가 올바르지 않습니다.");
-      return;
-    }
-
-    onLogin(); // 상위(App.js) 상태 갱신
-    navigate("/"); // 로그인 후 홈으로 이동
+    alert("현재 로그인 기능은 비활성화되어 있습니다.");
   };
 
   return (
@@ -40,6 +28,7 @@ export default function Login({ onLogin }) {
             type="email"
             name="email"
             placeholder="이메일"
+            value={form.email}
             onChange={handleChange}
             required
           />
@@ -47,11 +36,10 @@ export default function Login({ onLogin }) {
             type="password"
             name="password"
             placeholder="비밀번호"
+            value={form.password}
             onChange={handleChange}
             required
           />
-
-          {error && <p className="login-error">{error}</p>}
 
           <button className="login-btn" type="submit">
             로그인
