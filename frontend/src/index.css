@@ -49,3 +49,24 @@ html {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(150, 150, 150, 0.55);
 }
+
+
+/* ================================
+   REVIA — Global Design Tokens
+   ================================ */
+:root {
+  --bg-dark: #0b0b0f;
+  --text-main: #f5f7fa;
+  --text-sub: #b7bdc9;
+  --accent: #8a66ff;
+  --accent-light: #b59cff;
+}
+
+/* 시스템 라이트 모드 대비 색상 */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-dark: #ffffff;
+    --text-main: #0b0b0f;
+    --text-sub: #596273;
+  }
+}

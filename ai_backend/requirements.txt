@@ -1,0 +1,15 @@
+# ai_backend/requirements.txt
+-r app/kfashion_ai_model/requirements.txt
+
+fastapi
+uvicorn[standard]
+pydantic
+python-multipart
+Pillow
+torch            # ← 누락 보완
+torchvision
+# pandas         # ← 사용 안 하면 제거 권장
+
+
+httpx
+python-dotenv

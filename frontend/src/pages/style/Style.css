@@ -169,3 +169,70 @@
     font-size: 2rem;
   }
 }
+
+/* ====== 결과(체크박스) 영역 ====== */
+.result-section {
+  max-width: 900px;
+  margin: 28px auto 0;
+  text-align: left;
+}
+
+.group { margin-top: 18px; }
+.group-title {
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text-main);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #e5e7eb;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  color: var(--text-main);
+  transition: 0.2s ease;
+}
+.chip:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+.chip input { accent-color: var(--accent); }
+
+.empty { color: var(--text-sub); }
+
+.selected { margin-top: 22px; }
+.selected-title { font-weight: 700; margin-bottom: 8px; }
+.selected-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.badge {
+  border: 1px solid #e5e7eb;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.12);
+}
+
+.query { margin-top: 16px; }
+.query-title { font-weight: 700; margin-bottom: 6px; }
+.query-code {
+  display: inline-block;
+  background: #111;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+
+/* 드래그 오버 시 테두리 강조 */
+.upload-box.drag-over { outline: 3px solid rgba(138, 102, 255, 0.5); }
+
+/* 로딩/비활성 버튼 상태 */
+.analyze-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }

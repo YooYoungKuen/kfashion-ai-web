@@ -1,0 +1,33 @@
+# === 1. 대용량 학습 파일 (모델, 데이터) 제외 ===
+app/kfashion_ai_model/**/*.pt
+app/kfashion_ai_model/**/*.pth
+app/kfashion_ai_model/**/*.h5
+app/kfashion_ai_model/**/*.pkl
+app/kfashion_ai_model/**/*.ckpt
+app/kfashion_ai_model/**/*.onnx
+app/kfashion_ai_model/**/*.weights
+
+# === 2. 데이터셋 / 결과물 제외 (코드는 유지) ===
+app/kfashion_ai_model/checkpoint/
+app/kfashion_ai_model/data/
+app/kfashion_ai_model/img/
+app/kfashion_ai_model/output/
+app/kfashion_ai_model/run/
+app/kfashion_ai_model/utility/
+
+# 단, 코드 공유를 위해 폴더 구조는 남기기
+!app/kfashion_ai_model/**/*.py
+!app/kfashion_ai_model/**/*.txt
+!app/kfashion_ai_model/label_map.py
+!app/kfashion_ai_model/requirements.txt
+
+# === 3. 공통 Python 관련 제외 ===
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.log
+
+# === 4. IDE 설정 제외 ===
+.idea/
+.vscode/
