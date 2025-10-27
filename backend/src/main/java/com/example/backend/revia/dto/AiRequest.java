@@ -1,22 +1,19 @@
 package com.example.backend.revia.dto;
 
 public class AiRequest {
-    private String message;
-    private String imageUrl;
+    private String prompt;
 
-    public String getMessage() {
-        return message;
+    public AiRequest() {}
+
+    public AiRequest(String prompt) {
+        this.prompt = prompt;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public String getPrompt() {
+        return prompt;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setPrompt(String prompt) {
+        this.prompt = prompt;
     }
 }

@@ -1,9 +1,12 @@
-// src/api/http.js
+// ✅ axios 기본 설정 파일
+
 import axios from "axios";
 
 const http = axios.create({
-  baseURL: "http://127.0.0.1:8001", // FastAPI 서버
-  withCredentials: false,           // 쿠키 인증 안쓰면 false
+  baseURL: "http://localhost:8081", // Spring Boot 서버 주소
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 export default http;
