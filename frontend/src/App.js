@@ -24,9 +24,6 @@ import Login from "./pages/login/Login";
 import Signup from "./pages/login/Signup";
 import ChangePassword from "./pages/login/ChangePassword";
 
-// 🔹 OpenAI / API 검색 페이지
-import DataSearch from "./pages/data/DataSearch";
-
 import "./App.css";
 
 export default function App({ theme, setTheme }) {
@@ -52,7 +49,6 @@ export default function App({ theme, setTheme }) {
   <Route path="/login" element={<Login />} />
   <Route path="/signup" element={<Signup />} />
   <Route path="/change-password" element={<ChangePassword />} />
-  <Route path="/api-search" element={<DataSearch />} />
   <Route path="*" element={<Navigate to="/" replace />} />
 </Routes>
     </Router>
