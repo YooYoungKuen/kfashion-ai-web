@@ -23,6 +23,10 @@ python -m venv .venv
 pip install -r requirements.txt
 python -m uvicorn app.main:app --host 127.0.0.1 --port 8001 --reload (ai_backend 서버 접속)
 
+## predict 테스트
+.\.venv\Scripts\Activate.ps1 (가상환경)
+start http://127.0.0.1:8001/docs (swagger ui test)
+
 
 ### backend(Spring Boot)
 cd backend
