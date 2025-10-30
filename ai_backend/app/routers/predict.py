@@ -18,11 +18,11 @@ async def predict(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="이미지 파일을 읽을 수 없습니다.")
 
     # 5개 모델 추론
-    merged = run_all(img)        # {"category":[...], "detail":[...], ...}
-    attrs  = to_keywords(merged) # 각 task top-1
+    merged = run_all(img)        # category/print/style/texture=Top-5, detail=Sigmoid
+    attrs  = to_keywords(merged) # 각 task 대표 Top-1
 
     return PredictResponse(
         image_id=str(uuid.uuid4()),
         attributes=attrs,
-        raw=merged,   # 프론트에서 상세(top3)도 쓰고 싶으면 유지, 아니면 제거해도 됨
+        raw=merged,   # 상세는 raw에서 확인
     )

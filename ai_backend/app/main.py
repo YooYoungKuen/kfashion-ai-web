@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import labels
+from app.routers import analyze
 
 app = FastAPI(title="K-Fashion Inference API", version="1.0.0")
 
@@ -25,3 +26,4 @@ app.include_router(predict.router, prefix="/predict", tags=["predict"])
 app.include_router(debug.router,   prefix="/debug",   tags=["debug"])
 app.include_router(shop.router,    prefix="/shop",    tags=["shop"])   # ← 추가
 app.include_router(labels.router, prefix="/labels", tags=["labels"])
+app.include_router(analyze.router, prefix="", tags=["analyze"])

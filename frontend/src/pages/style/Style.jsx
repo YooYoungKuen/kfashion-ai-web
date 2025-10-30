@@ -1,6 +1,8 @@
 // src/pages/style/Style.jsx
 import { useMemo, useRef, useState } from "react";
 import http from "../../api/http";
+import { Cropper } from "react-advanced-cropper";
+import "react-advanced-cropper/dist/style.css";
 import "./Style.css";
 
 const KEYS = ["category", "detail", "print", "style", "texture"];
@@ -12,32 +14,21 @@ const KEY_LABEL = {
   texture: "텍스처",
 };
 
-// 응답 → 체크박스 옵션 정규화
 function normalizeOptions(resp) {
   const out = {};
   const raw = resp?.raw ?? {};
   const attrs = Array.isArray(resp?.attributes) ? resp.attributes : [];
-
   KEYS.forEach((k) => {
     const rawArr = Array.isArray(raw[k]) ? raw[k] : [];
     let labels = rawArr
       .map((it) => (typeof it === "string" ? it : it?.label))
       .filter(Boolean);
-
     if (labels.length === 0) {
       const a = attrs.find((it) => it?.key === k && it?.label);
       if (a) labels = [a.label];
     }
-
-    // 🔹 임시 우회: style_숫자 토큰은 숨김
-    if (k === "style") {
-      labels = labels.filter((name) => !/^style_\d+$/i.test(name));
-    }
-
-    // 중복 제거
-    labels = Array.from(new Set(labels));
-
-    out[k] = labels;
+    if (k === "style") labels = labels.filter((n) => !/^style_\d+$/i.test(n));
+    out[k] = Array.from(new Set(labels));
   });
   return out;
 }
@@ -46,24 +37,30 @@ export default function Style() {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState("");
   const [loading, setLoading] = useState(false);
-
   const [result, setResult] = useState(null);
   const [options, setOptions] = useState({});
-  const [checked, setChecked] = useState({}); // ❗️자동 체크 없음 (비워둠)
+  const [checked, setChecked] = useState({});
+
+  const [cropImage, setCropImage] = useState(null);
+  const [cropping, setCropping] = useState(false);
+  const cropperRef = useRef(null);
 
   const fileInputRef = useRef(null);
   const [isDragOver, setIsDragOver] = useState(false);
 
-  const loadFile = (f) => {
+  const openCropperWithFile = (f) => {
     if (!f) return;
-    setFile(f);
-    setPreview(URL.createObjectURL(f));
+    const url = URL.createObjectURL(f);
+    setCropImage(url);
+    setCropping(true);
+    setFile(null);
+    setPreview("");
     setResult(null);
     setOptions({});
     setChecked({});
   };
 
-  const onFileChange = (e) => loadFile(e.target.files?.[0] || null);
+  const onFileChange = (e) => openCropperWithFile(e.target.files?.[0] || null);
   const onUploadBoxClick = () => fileInputRef.current?.click();
 
   const onDragOver = (e) => { e.preventDefault(); setIsDragOver(true); };
@@ -71,32 +68,61 @@ export default function Style() {
   const onDrop = (e) => {
     e.preventDefault();
     setIsDragOver(false);
-    loadFile(e.dataTransfer.files?.[0] || null);
+    openCropperWithFile(e.dataTransfer.files?.[0] || null);
+  };
+
+  const handleCropComplete = () => {
+    const cropper = cropperRef.current;
+    if (!cropper || typeof cropper.getCanvas !== "function")
+      return alert("❌ Cropper 초기화 실패");
+    const canvas = cropper.getCanvas();
+    if (!canvas) return alert("❌ 잘라낼 영역이 없습니다.");
+    const base64 = canvas.toDataURL("image/jpeg");
+    setPreview(base64);
+    canvas.toBlob(
+      (blob) => {
+        if (!blob) return alert("❌ Blob 생성 실패");
+        setFile(new File([blob], "crop.jpg", { type: "image/jpeg" }));
+        setCropping(false);
+        if (cropImage) URL.revokeObjectURL(cropImage);
+        setCropImage(null);
+      },
+      "image/jpeg",
+      0.95
+    );
+  };
+
+  const cancelCropping = () => {
+    setCropping(false);
+    if (cropImage) URL.revokeObjectURL(cropImage);
+    setCropImage(null);
   };
 
   const resetImage = () => {
-    setFile(null); setPreview("");
-    setResult(null); setOptions({}); setChecked({});
+    setFile(null);
+    setPreview("");
+    setResult(null);
+    setOptions({});
+    setChecked({});
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   const onAnalyze = async () => {
-    if (!file) return alert("이미지를 업로드하세요.");
+    if (!file) return alert("이미지를 업로드하고 자르기 완료를 눌러주세요.");
     setLoading(true);
     try {
       const fd = new FormData();
       fd.append("file", file);
+      fd.append("gender", "female");
       const { data } = await http.post("/predict", fd, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setResult(data);
       setOptions(normalizeOptions(data));
-      // ❗️자동 체크 없음: 사용자가 직접 선택
       setChecked({});
-      console.log("AI 응답:", data);
     } catch (err) {
       console.error(err);
-      alert("분석 중 오류가 발생했습니다. 콘솔을 확인하세요.");
+      alert("분석 중 오류가 발생했습니다.");
     } finally {
       setLoading(false);
     }
@@ -118,62 +144,62 @@ export default function Style() {
 
   return (
     <div className="style-page">
-      <div className="style-inner">
-        <h1>
-          AI 스타일 분석
-          <span>Style Analysis</span>
-        </h1>
-
-        <p className="style-desc">
-          이미지를 업로드하면 AI가 색감 · 패턴 · 무드를 분석합니다.
-        </p>
+      <div className="style-inner glass">
+        <h1 className="title">REVIA AI Style Studio</h1>
+        <p className="desc">AI가 카테고리·디테일·프린트·스타일·텍스처를 분석해 키워드로 정리합니다.</p>
 
         {!preview ? (
           <div
-            className="upload-box"
+            className={`upload-box glass ${isDragOver ? "drag-over" : ""}`}
             onClick={onUploadBoxClick}
             onDragOver={onDragOver}
             onDragLeave={onDragLeave}
             onDrop={onDrop}
-            style={{ outline: isDragOver ? "3px solid rgba(138,102,255,0.5)" : "none" }}
           >
-            <div className="upload-label">
-              <div className="upload-icon">📂</div>
-              <div>이미지를 업로드하거나 이 영역에 끌어다 놓으세요</div>
-              <span>PNG, JPG, JPEG (최대 10MB)</span>
-            </div>
-            <input ref={fileInputRef} type="file" accept="image/*" onChange={onFileChange} />
+            <span>📷 이미지 업로드</span>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={onFileChange}
+              style={{ display: "none" }}
+            />
           </div>
         ) : (
           <div className="preview-container">
             <img src={preview} alt="preview" className="preview-img" />
             <div className="preview-overlay">
               <div>{file?.name}</div>
-              <button className="reset-btn" onClick={resetImage}>초기화</button>
+              <button className="reset-btn" onClick={resetImage}>
+                초기화
+              </button>
             </div>
           </div>
         )}
 
-        <div className="analyze-cta">
-          <button className="analyze-btn" onClick={onAnalyze} disabled={!file || loading}>
-            {loading ? "분석 중..." : (result ? "다시 분석하기" : "AI로 분석하기")}
-          </button>
-        </div>
+        <button
+          className={`analyze-btn ${loading ? "loading" : ""}`}
+          onClick={onAnalyze}
+          disabled={!file || loading}
+        >
+          {loading ? "분석 중..." : result ? "다시 분석하기" : "AI로 분석하기"}
+        </button>
 
         {result && (
-          <div className="result-section">
+          <div className="result-box glass">
             {KEYS.map((k) => (
               <div key={k} className="group">
                 <div className="group-title">{KEY_LABEL[k]}</div>
                 <div className="chips">
                   {(options[k] || []).map((label, idx) => (
-                    <label key={idx} className="chip">
+                    <label key={idx} className="chip modern">
                       <input
                         type="checkbox"
                         checked={checked[k]?.has(label) || false}
                         onChange={() => toggle(k, label)}
                       />
-                      <span>{label}</span>
+                      <span className="checkmark" />
+                      <span className="chip-label">{label}</span>
                     </label>
                   ))}
                   {(options[k] || []).length === 0 && (
@@ -182,25 +208,33 @@ export default function Style() {
                 </div>
               </div>
             ))}
-
-            <div className="selected">
-              <div className="selected-title">선택된 키워드</div>
-              <div className="selected-chips">
-                {selectedKeywords.length > 0 ? (
-                  selectedKeywords.map((kw, i) => <span key={i} className="badge">{kw}</span>)
-                ) : (
-                  <span className="empty">아직 선택된 키워드가 없습니다.</span>
-                )}
-              </div>
-            </div>
-
-            <div className="query">
-              <div className="query-title">검색 쿼리(미리보기)</div>
-              <code className="query-code">{selectedKeywords.join(" ")}</code>
-            </div>
           </div>
         )}
       </div>
+
+      {/* ✂️ 자르기 모달 */}
+      {cropping && (
+        <div className="crop-modal">
+          <div className="crop-container glass">
+            <Cropper
+              ref={cropperRef}
+              src={cropImage}
+              className="advanced-cropper"
+              stencilProps={{
+                movable: true,
+                resizable: true,
+                aspectRatio: 0,
+                lines: true,
+                handlers: true,
+              }}
+            />
+            <div className="crop-controls">
+              <button onClick={handleCropComplete}>자르기 완료</button>
+              <button onClick={cancelCropping}>취소</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,0 +1,32 @@
+# === AI model folders (ignore local models) ===
+ai_backend/app/kfashion_ai_model/
+*.pt
+*.h5
+*.pkl
+*.ckpt
+*.pth
+*.onnx
+*.weights
+
+# === Python ===
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.log
+
+# === Node (frontend / backend) ===
+frontend/node_modules/
+backend/node_modules/
+frontend/dist/
+backend/dist/
+frontend/build/
+backend/build/
+
+# === Environment & Local Settings ===
+*.env
+*.env.*
+.DS_Store
+
+# === Jupyter ===
+*.ipynb_checkpoints/
